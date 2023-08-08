@@ -6,16 +6,13 @@ from dotenv import load_dotenv
 
 def create_connection(host_name, user_name, user_password):
     new_connection = None
-    try:
-        new_connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            passwd=user_password,
-            database='main'
-        )
-        print("Connection to MySQL DB successful")
-    except Error as e:
-        print(f"The error '{e}' occurred")
+    new_connection = mysql.connector.connect(
+        host=host_name,
+        user=user_name,
+        passwd=user_password,
+        database='main'
+    )
+    print("Connection to MySQL DB successful")
     return new_connection
 
 
