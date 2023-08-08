@@ -1,26 +1,20 @@
-import mysql.connector
-from mysql.connector import Error
+import psycopg2
 import os
 from dotenv import load_dotenv
 
 
-def create_connection(host_name, user_name, user_password):
+def create_connection(connection_string: str):
     new_connection = None
     try:
-        new_connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            passwd=user_password,
-            database='main'
-        )
+        new_connection = psycopg2.connect(connection_string)
         print("Connection to MySQL DB successful")
-    except Error as e:
+    except Exception as e:
         print(f"The error '{e}' occurred")
     return new_connection
 
 
 load_dotenv()
-connection = create_connection(os.getenv('DB_HOST'), os.getenv('DB_USER'), os.getenv('DB_PASSWORD'))
+connection = create_connection(os.getenv('DB_HOST'))
 
 
 def request_data(query):
@@ -28,7 +22,7 @@ def request_data(query):
     try:
         cursor.execute(query)
         return cursor.fetchall()
-    except Error as e:
+    except Exception as e:
         print(f"The error '{e}' occurred")
 
 
@@ -37,7 +31,7 @@ def submit_data(query):
     try:
         cursor.execute(query)
         connection.commit()
-    except Error as e:
+    except Exception as e:
         print(f"The error '{e}' occurred")
 
 

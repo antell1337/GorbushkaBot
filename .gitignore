@@ -78,7 +78,5 @@ venv
 .idea
 __pycache__
 
-
-
 app.dev.env
 postgres.dev.env

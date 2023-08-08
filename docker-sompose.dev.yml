@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: gorbushka_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+    command: python tgbot.py
+    env_file:
+      app.dev.env
+
+  db:
+    container_name: gorbushka_db
+    image: postgres:alpine3.18
+    ports:
+      - "5432:5432"
+    volumes:
+      - "pg-data:/var/lib/postgresql/data"
+    env_file:
+      postgres.dev.env
+
+volumes:
+  pg-data:
